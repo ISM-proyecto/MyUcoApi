@@ -20,9 +20,17 @@ namespace MyUcoApi.Controllers
 
         // GET api/values
         [HttpGet]
-        public IEnumerable<Classroom> Get()
+        public async Task<IActionResult> Get()
         {
-            return _repository.GetClassrooms();
+            try
+            {
+                return Ok(await _repository.GetClassroomsAsync());
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e);
+            }
+            
         }
     }
 }

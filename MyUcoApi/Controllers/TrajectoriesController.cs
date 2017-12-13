@@ -20,13 +20,21 @@ namespace MyUcoApi.Controllers
 
         // GET api/values
         [HttpGet]
-        public IEnumerable<object> Get()
+        public async Task<IActionResult> Get()
         {
-            return _repository.GetTrajectories().Select(x=> new
+            try
             {
-                Name = x.Name,
-                Groups = x.Groups.Select(g => g.Elements)
-            });
+                return Ok((await _repository.GetTrajectoriesAsync()).Select(x => new
+                {
+                    Name = x.Name,
+                    Groups = x.Groups.Select(g => g.Elements)
+                }));
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e);
+            }
+            
         }
     }
 }

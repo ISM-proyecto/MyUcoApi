@@ -20,9 +20,16 @@ namespace MyUcoApi.Controllers
 
         // GET api/values
         [HttpGet]
-        public IEnumerable<Beacon> Get()
+        public async Task<IActionResult> Get()
         {
-            return _repository.GetBeacons();
+            try
+            {
+                return Ok(await _repository.GetBeaconsAsync());
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e);
+            }
         }
     }
 }

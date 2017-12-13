@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace MyUcoApi.Repository
 {
@@ -14,22 +15,22 @@ namespace MyUcoApi.Repository
             _context = context;
         }
 
-        public IEnumerable<Classroom> GetClassrooms()
+        public async Task<IEnumerable<Classroom>> GetClassroomsAsync()
         {
-            return _context.Classrooms.ToArray();
+            return await _context.Classrooms.ToArrayAsync();
         }
 
-        public IEnumerable<Beacon> GetBeacons()
+        public async Task<IEnumerable<Beacon>> GetBeaconsAsync()
         {
-            return _context.Beacons.ToArray();
+            return await _context.Beacons.ToArrayAsync();
         }
 
-        public IEnumerable<Trajectory> GetTrajectories()
+        public async Task<IEnumerable<Trajectory>> GetTrajectoriesAsync()
         {
-            return _context.Trajectories
+            return await _context.Trajectories
                            .Include(x=> x.Groups)
                            .ThenInclude(x=>x.Elements)
-                           .ToArray();
+                           .ToArrayAsync();
         }
     }
 }
